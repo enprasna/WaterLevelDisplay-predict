@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Water Level Insights</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">FIELD INTELLIGENCE / MVP</p>
+          <h1>Water Level Insights</h1>
+          <p class="subtitle">A calm, practical view of what the water is doing now and what may come next.</p>
+        </div>
+        <div class="system-status"><span class="status-dot"></span> Local workspace</div>
+      </header>
+
+      <section class="toolbar" aria-label="Station controls">
+        <label>Monitoring station<select id="stationSelect"></select></label>
+        <div class="toolbar-actions">
+          <button id="exportButton" class="button secondary">Export CSV</button>
+          <label class="button secondary file-button">Import CSV<input id="importInput" type="file" accept=".csv,.txt,text/csv,text/plain" /></label>
+        </div>
+      </section>
+
+      <section class="metric-grid" id="metrics"></section>
+
+      <section class="content-grid">
+        <article class="panel chart-panel">
+          <div class="panel-heading"><div><p class="eyebrow">OBSERVED LEVEL</p><h2>Recent readings</h2></div><span class="unit-label" id="chartUnit"></span></div>
+          <div class="chart-wrap"><svg id="chart" viewBox="0 0 720 280" role="img" aria-label="Water level trend chart"></svg></div>
+          <div class="legend"><span><i class="legend-line observed"></i>Observed</span><span><i class="legend-line forecast"></i>Baseline forecast</span></div>
+        </article>
+
+        <article class="panel forecast-panel">
+          <div class="panel-heading"><div><p class="eyebrow">ANALYSIS LAYER</p><h2>Next 24 hours</h2></div><span class="tag">Baseline</span></div>
+          <div id="forecastValue" class="forecast-value"></div>
+          <p id="forecastCopy" class="muted"></p>
+          <div class="forecast-bar"><span id="forecastBar"></span></div>
+          <p class="small-note">Uses the recent average change between readings. Replace with a trained model when enough clean history is available.</p>
+        </article>
+      </section>
+
+      <section class="lower-grid">
+        <article class="panel alert-panel"><div class="panel-heading"><div><p class="eyebrow">GUARDRAILS</p><h2>Threshold status</h2></div></div><div id="alertContent"></div></article>
+        <article class="panel entry-panel"><div class="panel-heading"><div><p class="eyebrow">DATA ENTRY</p><h2>Add a reading</h2></div></div><form id="readingForm"><label>Timestamp<input id="readingTime" type="datetime-local" required /></label><label>Water level<input id="readingLevel" type="number" step="0.01" min="0" required /></label><button class="button primary" type="submit">Save reading</button></form><p id="formMessage" class="form-message" aria-live="polite"></p></article>
+      </section>
+
+      <footer><span>Measured data stays separate from estimates.</span><span id="readingCount"></span></footer>
+    </main>
+    <script src="app.js?v=csv-import"></script>
+  </body>
+</html>

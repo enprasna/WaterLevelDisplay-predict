@@ -96,6 +96,12 @@
   min-height: 39px;
 }
 
+@media (min-width: 761px) {
+  .metric-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
 .station-directory {
   min-height: 0;
   display: flex;

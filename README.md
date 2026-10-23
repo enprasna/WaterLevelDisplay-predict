@@ -28,6 +28,10 @@ python .\tools\import_station_workbook.py "path\to\moon river stations.xlsx"
 
 The importer reads Excel date serials and the `Time`, flow (`Q`), and water-level (`GH`) columns. The plotted history is downsampled for display; full daily records remain available to metrics and CSV export. Additional manual and CSV readings are held in browser memory and are cleared when the page reloads.
 
+## RID hourly snapshot
+
+`rid-latest-readings.js` contains the latest available hourly water-level values from the RID report for 23 October 2026. It includes 10 station codes that match the dashboard register. RID gauge levels are displayed separately from workbook history because their level reference has not been confirmed; they are not included in historical charts, forecasts, or date-range exports. The snapshot is not a live connection and must be refreshed from a new RID report export.
+
 ## Next development step
 
 Migrate the UI to Vite + React + TypeScript. Add a Python FastAPI service with PostgreSQL behind an API/data layer. Keep measured readings and forecasts in separate tables, and record forecast model version, generated time, horizon, and confidence range. The baseline forecast in `app.js` is intentionally simple and should not be presented as a safety-critical prediction.

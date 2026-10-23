@@ -53,6 +53,7 @@
       <section class="content-grid">
         <article class="panel chart-panel">
           <div class="panel-heading"><div><p class="eyebrow">OBSERVED DATA</p><h2>Recent readings</h2></div><span class="unit-label" id="chartUnit"></span></div>
+          <div class="date-filter" aria-label="Filter readings by date"><label>From<input id="dateFrom" type="date" /></label><label>To<input id="dateTo" type="date" /></label><button id="clearDateFilter" class="button secondary" type="button">Clear</button></div>
           <div class="chart-wrap"><svg id="chart" viewBox="0 0 720 280" role="img" aria-label="Water level trend chart"></svg></div>
           <div class="legend"><span><i class="legend-line observed"></i>Observed</span><span><i class="legend-line forecast"></i>Baseline forecast</span></div>
         </article>

@@ -3,15 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Water Level Insights</title>
+    <title>Moon River</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="station-map.css" />
   </head>
   <body>
     <main class="shell">
       <header class="topbar">
         <div>
           <p class="eyebrow">FIELD INTELLIGENCE / MVP</p>
-          <h1>Water Level Insights</h1>
+          <h1>Moon River</h1>
           <p class="subtitle">A calm, practical view of what the water is doing now and what may come next.</p>
         </div>
         <div class="system-status"><span class="status-dot"></span> Local workspace</div>
@@ -19,6 +20,7 @@
 
       <section class="toolbar" aria-label="Station controls">
         <label>Monitoring station<select id="stationSelect"></select></label>
+                  <label>Measurement<select id="seriesSelect"><option value="level">Water level (m)</option><option value="flow">Flow (m³/s)</option></select></label>
         <div class="toolbar-actions">
           <button id="exportButton" class="button secondary">Export CSV</button>
           <label class="button secondary file-button">Import CSV<input id="importInput" type="file" accept=".csv,.txt,text/csv,text/plain" /></label>
@@ -27,9 +29,30 @@
 
       <section class="metric-grid" id="metrics"></section>
 
+      <section class="map-grid" aria-labelledby="stationMapHeading">
+        <article class="panel map-panel">
+          <div class="panel-heading map-heading">
+            <div><p class="eyebrow">MOON RIVER MONITORING NETWORK</p><h2 id="stationMapHeading">Station locations</h2></div>
+            <span class="tag">13 sites</span>
+          </div>
+          <div class="map-frame"><iframe id="stationMap" title="Google Map showing the selected water monitoring station" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+          <div class="map-caption">
+            <div><strong id="mapStationName"></strong><span id="mapStationCoordinates" class="map-coordinates"></span></div>
+            <a id="mapExternalLink" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+          </div>
+          <p class="map-note">Coordinates converted from the workbook's UTM northing/easting using WGS84 Zone 48N. The workbook does not specify its datum or UTM zone; confirm these assumptions before using the pins for field navigation.</p>
+        </article>
+
+        <aside class="panel station-directory" aria-label="Monitoring station list">
+          <div class="panel-heading"><div><p class="eyebrow">STATION REGISTER</p><h2>All stations</h2></div><span class="unit-label">Sheet 1</span></div>
+          <p class="station-source">Sheet 2 contains matching annual flow and water-level coverage for 12 stations; TS6 is listed only in sheet 1.</p>
+          <div id="mapStationList" class="station-list"></div>
+        </aside>
+      </section>
+
       <section class="content-grid">
         <article class="panel chart-panel">
-          <div class="panel-heading"><div><p class="eyebrow">OBSERVED LEVEL</p><h2>Recent readings</h2></div><span class="unit-label" id="chartUnit"></span></div>
+          <div class="panel-heading"><div><p class="eyebrow">OBSERVED DATA</p><h2>Recent readings</h2></div><span class="unit-label" id="chartUnit"></span></div>
           <div class="chart-wrap"><svg id="chart" viewBox="0 0 720 280" role="img" aria-label="Water level trend chart"></svg></div>
           <div class="legend"><span><i class="legend-line observed"></i>Observed</span><span><i class="legend-line forecast"></i>Baseline forecast</span></div>
         </article>
@@ -45,11 +68,13 @@
 
       <section class="lower-grid">
         <article class="panel alert-panel"><div class="panel-heading"><div><p class="eyebrow">GUARDRAILS</p><h2>Threshold status</h2></div></div><div id="alertContent"></div></article>
-        <article class="panel entry-panel"><div class="panel-heading"><div><p class="eyebrow">DATA ENTRY</p><h2>Add a reading</h2></div></div><form id="readingForm"><label>Timestamp<input id="readingTime" type="datetime-local" required /></label><label>Water level<input id="readingLevel" type="number" step="0.01" min="0" required /></label><button class="button primary" type="submit">Save reading</button></form><p id="formMessage" class="form-message" aria-live="polite"></p></article>
+        <article class="panel entry-panel"><div class="panel-heading"><div><p class="eyebrow">DATA ENTRY</p><h2>Add an observation</h2></div></div><form id="readingForm"><label>Timestamp<input id="readingTime" type="datetime-local" required /></label><label><span id="readingValueLabel">Water level (m)</span><input id="readingValue" type="number" step="0.01" required /></label><button class="button primary" type="submit">Save reading</button></form><p id="formMessage" class="form-message" aria-live="polite"></p></article>
       </section>
 
       <footer><span>Measured data stays separate from estimates.</span><span id="readingCount"></span></footer>
     </main>
-    <script src="app.js?v=csv-import"></script>
+    <script src="station-map.js"></script>
+    <script src="station-readings.js"></script>
+    <script src="app.js?v=all-stations"></script>
   </body>
 </html>
